@@ -27,6 +27,7 @@ function handleChange(value: boolean) {
 
 <template>
   <SwitchRoot
+    dir="ltr"
     :model-value="props.checked"
     :default-value="props.defaultChecked"
     :disabled="props.disabled"

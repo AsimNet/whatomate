@@ -487,11 +487,11 @@ onUnmounted(() => {
       </div>
       <div class="flex items-center gap-2">
         <Button variant="outline" size="sm" @click="emit('openPreview')">
-          <Play class="h-4 w-4 mr-1" />
+          <Play class="h-4 w-4 me-1" />
           Preview
         </Button>
         <Button variant="outline" size="sm" @click="emit('addStep')">
-          <Plus class="h-4 w-4 mr-1" />
+          <Plus class="h-4 w-4 me-1" />
           Add Step
         </Button>
       </div>

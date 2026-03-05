@@ -27,11 +27,11 @@ interface WhatsAppFlow {
 }
 interface Account { id: string; name: string }
 
-const flowCategories = [
-  { value: 'SIGN_UP', label: 'Sign Up' }, { value: 'SIGN_IN', label: 'Sign In' }, { value: 'APPOINTMENT_BOOKING', label: 'Appointment Booking' },
-  { value: 'LEAD_GENERATION', label: 'Lead Generation' }, { value: 'CONTACT_US', label: 'Contact Us' }, { value: 'CUSTOMER_SUPPORT', label: 'Customer Support' },
-  { value: 'SURVEY', label: 'Survey' }, { value: 'OTHER', label: 'Other' },
-]
+const flowCategories = computed(() => [
+  { value: 'SIGN_UP', label: t('flows.categories.SIGN_UP') }, { value: 'SIGN_IN', label: t('flows.categories.SIGN_IN') }, { value: 'APPOINTMENT_BOOKING', label: t('flows.categories.APPOINTMENT_BOOKING') },
+  { value: 'LEAD_GENERATION', label: t('flows.categories.LEAD_GENERATION') }, { value: 'CONTACT_US', label: t('flows.categories.CONTACT_US') }, { value: 'CUSTOMER_SUPPORT', label: t('flows.categories.CUSTOMER_SUPPORT') },
+  { value: 'SURVEY', label: t('flows.categories.SURVEY') }, { value: 'OTHER', label: t('flows.categories.OTHER') },
+])
 
 const flows = ref<WhatsAppFlow[]>([])
 const accounts = ref<Account[]>([])
@@ -212,8 +212,8 @@ function sanitizeScreensForMeta(screens: any[]): any[] {
   <div class="flex flex-col h-full bg-[#0a0a0b] light:bg-gray-50">
     <PageHeader :title="$t('flows.title')" :subtitle="$t('flows.subtitle')" :icon="Workflow" icon-gradient="bg-gradient-to-br from-violet-500 to-purple-600 shadow-violet-500/20">
       <template #actions>
-        <Button variant="outline" size="sm" @click="syncFlows" :disabled="isSyncing || !selectedAccount || selectedAccount === 'all'"><RefreshCw :class="['h-4 w-4 mr-2', isSyncing && 'animate-spin']" />{{ $t('flows.syncFromMeta') }}</Button>
-        <Button variant="outline" size="sm" @click="openCreateDialog"><Plus class="h-4 w-4 mr-2" />{{ $t('flows.createFlow') }}</Button>
+        <Button variant="outline" size="sm" @click="syncFlows" :disabled="isSyncing || !selectedAccount || selectedAccount === 'all'"><RefreshCw :class="['h-4 w-4 me-2', isSyncing && 'animate-spin']" />{{ $t('flows.syncFromMeta') }}</Button>
+        <Button variant="outline" size="sm" @click="openCreateDialog"><Plus class="h-4 w-4 me-2" />{{ $t('flows.createFlow') }}</Button>
       </template>
     </PageHeader>
 
@@ -262,7 +262,7 @@ function sanitizeScreensForMeta(screens: any[]): any[] {
                 </template>
                 <template #cell-status="{ item: flow }">
                   <Badge v-if="flow.status?.toUpperCase() === 'DEPRECATED'" variant="destructive" class="text-xs">
-                    <Archive class="h-3 w-3 mr-1" />{{ $t('flows.deprecated') }}
+                    <Archive class="h-3 w-3 me-1" />{{ $t('flows.deprecated') }}
                   </Badge>
                   <Badge v-else variant="outline" :class="[getStatusClass(flow.status), 'text-xs']">{{ flow.status }}</Badge>
                 </template>
@@ -320,7 +320,7 @@ function sanitizeScreensForMeta(screens: any[]): any[] {
                 </template>
                 <template #empty-action>
                   <Button v-if="!searchQuery" variant="outline" size="sm" @click="openCreateDialog">
-                    <Plus class="h-4 w-4 mr-2" />{{ $t('flows.createFlow') }}
+                    <Plus class="h-4 w-4 me-2" />{{ $t('flows.createFlow') }}
                   </Button>
                 </template>
               </DataTable>
@@ -346,7 +346,7 @@ function sanitizeScreensForMeta(screens: any[]): any[] {
           </div>
         </div>
         <div class="flex-1 overflow-hidden py-4"><FlowBuilder v-model="flowBuilderData" /></div>
-        <DialogFooter><Button variant="outline" size="sm" @click="showCreateDialog = false" :disabled="isCreating">{{ $t('common.cancel') }}</Button><Button size="sm" @click="createFlow" :disabled="isCreating"><Loader2 v-if="isCreating" class="h-4 w-4 mr-2 animate-spin" />{{ $t('flows.createFlow') }}</Button></DialogFooter>
+        <DialogFooter><Button variant="outline" size="sm" @click="showCreateDialog = false" :disabled="isCreating">{{ $t('common.cancel') }}</Button><Button size="sm" @click="createFlow" :disabled="isCreating"><Loader2 v-if="isCreating" class="h-4 w-4 me-2 animate-spin" />{{ $t('flows.createFlow') }}</Button></DialogFooter>
       </DialogContent>
     </Dialog>
 
@@ -361,10 +361,10 @@ function sanitizeScreensForMeta(screens: any[]): any[] {
             <Label class="text-sm whitespace-nowrap">{{ $t('flows.category') }}:</Label>
             <Select v-model="editFormData.category" :disabled="isUpdating"><SelectTrigger class="w-[180px]"><SelectValue :placeholder="$t('flows.selectCategory')" /></SelectTrigger><SelectContent><SelectItem v-for="cat in flowCategories" :key="cat.value" :value="cat.value">{{ cat.label }}</SelectItem></SelectContent></Select>
           </div>
-          <div v-if="flowToEdit?.meta_flow_id" class="flex items-center gap-2 ml-auto"><Badge variant="outline">Meta ID: {{ flowToEdit.meta_flow_id }}</Badge></div>
+          <div v-if="flowToEdit?.meta_flow_id" class="flex items-center gap-2 ms-auto"><Badge variant="outline">Meta ID: {{ flowToEdit.meta_flow_id }}</Badge></div>
         </div>
         <div class="flex-1 overflow-hidden py-4"><FlowBuilder v-model="editFlowBuilderData" /></div>
-        <DialogFooter><Button variant="outline" size="sm" @click="showEditDialog = false" :disabled="isUpdating">{{ $t('common.cancel') }}</Button><Button size="sm" @click="updateFlow" :disabled="isUpdating"><Loader2 v-if="isUpdating" class="h-4 w-4 mr-2 animate-spin" />{{ $t('flows.saveChanges') }}</Button></DialogFooter>
+        <DialogFooter><Button variant="outline" size="sm" @click="showEditDialog = false" :disabled="isUpdating">{{ $t('common.cancel') }}</Button><Button size="sm" @click="updateFlow" :disabled="isUpdating"><Loader2 v-if="isUpdating" class="h-4 w-4 me-2 animate-spin" />{{ $t('flows.saveChanges') }}</Button></DialogFooter>
       </DialogContent>
     </Dialog>
 

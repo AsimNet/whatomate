@@ -164,7 +164,7 @@ watch(() => props.selectedPermissions, (newPerms, oldPerms) => {
               @update:checked="toggleGroup(group)"
             />
             <span class="font-medium">{{ group.label }}</span>
-            <Badge variant="secondary" class="ml-2">
+            <Badge variant="secondary" class="ms-2">
               {{ getSelectedCountForGroup(group) }}/{{ group.permissions.length }}
             </Badge>
           </div>
@@ -174,7 +174,7 @@ watch(() => props.selectedPermissions, (newPerms, oldPerms) => {
             <div
               v-for="permission in group.permissions"
               :key="permission.key"
-              class="flex items-start space-x-2"
+              class="flex items-start gap-2"
             >
               <Checkbox
                 :id="permission.key"
